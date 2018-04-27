@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="org01_code">
+
+<!--  resultMap 이름은 반드시 mapper 이어야 한다. -->
+
+<resultMap 	id="mapper" type="myApp.client.org.model.OrgCodeModel" >
+	<id  	column="org01_code_id"		property="codeId"/>
+	<result column="org01_company_id"	property="companyId"/>
+	<result column="org01_org_cd"		property="orgCode"/>
+	<result column="org01_open_date"	property="openDate"/>
+	<result column="org01_close_date"	property="closeDate"/>
+	<result column="org01_open_reason"	property="openReason"/>
+	<result column="org01_close_reason"	property="closeReason"/>
+	<result column="org01_note"			property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.* 
+	from 	org01_code a
+	where	org01_code_id = #{codeId} 
+</select>
+
+
+</mapper>
