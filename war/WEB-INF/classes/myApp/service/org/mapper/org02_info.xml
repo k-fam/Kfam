@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="org02_info">
+
+<!--  resultMap 이름은 반드시 mapper 이어야 한다. -->
+
+<resultMap 	id="mapper" type="myApp.client.org.model.OrgInfoModel" >
+	<id  	column="org02_info_id"			property="infoId"/>
+	<result column="org02_code_id"			property="codeId"/>
+	<result column="org02_parent_code_id"	property="parentCodeId"/>
+	<result column="org02_mod_date"			property="modDate"/>
+	<result column="org02_mod_reason"		property="modReason"/>
+	<result column="org02_mod_detail"		property="modDetail"/>
+	<result column="org02_level_cd"			property="levelCode"/>
+	<result column="org02_level_nm"			property="levelName"/>
+	<result column="org02_kor_nm"			property="korName"/>
+	<result column="org02_short_nm"			property="shortName"/>
+	<result column="org02_eng_nm"			property="engName"/>
+	<result column="org02_sort_order"		property="sortOrder"/>
+	<result column="org02_note"				property="note"/>	
+	
+	<association property="orgCodeModel" 
+		javaType="myApp.client.org.model.OrgCodeModel" 
+		resultMap="org01_code.mapper"
+	/>
+	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	org02_info.*, 
+			org01_code.*,  
+			f_cdnm('OrgLevelCode', org02_level_cd) org02_level_nm
+	from 	org02_info, 
+			org01_code
+	where	org02_info_id = #{infoId}
+	and		org02_code_id = org01_code_id  
+</select>
+
+
+<select id="selectByCodeId" resultType="Long" parameterType="Long" > 
+	select 	count(*) 
+	from 	org02_info 
+	where	org02_code_id = #{codeId}  
+</select>
+
+<select id="selectByChildCount" resultType="Long" parameterType="Long" > 
+	select 	count(*) 
+	from 	org02_info 
+	where	org02_parent_code_id = #{codeId}  
+</select>
+
+
+
+<select id="selectByParentId" resultMap="mapper" parameterType="HashMap"> 
+	select 	org02_info.*, 
+			org01_code.*, 
+			f_cdnm('OrgLevelCode', org02_level_cd) org02_level_nm
+	from 	org02_info, 
+			org01_code 
+	where 	org01_company_id 	= #{companyId}
+	and		org02_code_id 		= org01_code_id
+	and		org02_parent_code_id= #{parentCodeId}
+	and		#{baseDate} between org01_open_date and nvl(org01_close_date, to_date('99991231', 'yyyymmdd'))
+	and		org02_mod_date 
+			= ( select 	max(x.org02_mod_date) 
+				from 	org02_info x
+				where 	x.org02_code_id = org02_info.org02_code_id 
+				and		x.org02_mod_date &lt;= #{baseDate} )
+	order by org02_sort_order
+</select>
+
+
+
+</mapper>
+

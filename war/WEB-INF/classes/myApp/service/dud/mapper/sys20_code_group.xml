@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys20_code_group">
+
+<resultMap type="myApp.client.dud.model.CodeGroupModel" id="mapper">
+	<id     column="sys20_code_group_id" property="codeGroupId"/>
+	<result column="sys20_group_cd"      property="groupCode"/>
+	<result column="sys20_group_nm"      property="groupName"/>
+	<result column="sys20_sys_yn"        property="sysYn"/>
+	<result column="sys20_note"          property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long">
+	select *
+	  from sys20_code_group
+	 where sys20_code_group_id = #{codeGroupId}
+</select>
+
+<select id="selectByAll" resultMap="mapper" parameterType="Long">
+	select *
+	  from sys20_code_group
+	 order by sys20_group_cd
+</select>
+
+<select id="selectByName" resultMap="mapper" parameterType="String">
+	select *
+	  from sys20_code_group
+	 where sys20_group_nm like #{groupName}
+	 order by sys20_group_cd
+</select>
+
+</mapper>
