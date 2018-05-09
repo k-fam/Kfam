@@ -50,13 +50,13 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 		GridBuilder<UserModel> gridBuilder = new GridBuilder<UserModel>(properties.keyId());
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-		gridBuilder.addText(properties.ctzNo(), 90, "직원번호") ;
+//		gridBuilder.addText(properties.ctzNo(), 90, "직원번호") ;
 		gridBuilder.addText(properties.korName(), 80, "이름") ;
-		gridBuilder.addText(properties.mainMajor(), 200, "전공과목") ;
-		gridBuilder.addText(properties.genderName(), 60, "성별") ;
+//		gridBuilder.addText(properties.mainMajor(), 200, "전공과목") ;
+//		gridBuilder.addText(properties.genderName(), 60, "성별") ;
 		gridBuilder.addDate(properties.startDate(), 120, "근무시작일") ;
 		gridBuilder.addDate(properties.closeDate(), 120, "근무종료일") ;
-		gridBuilder.addText(properties.note(), 200, "비고" );
+//		gridBuilder.addText(properties.note(), 200, "비고" );
 
 		return gridBuilder.getGrid(); 
 	}

@@ -111,8 +111,8 @@ public class TabPage_Pay extends ContentPanel implements InterfaceTabPage, Inter
 		PayModel data = grid.getSelectionModel().getSelectedItem(); 
 		grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
 		grid.getStore().getRecord(data).addChange(properties.userId(), userModel.getUserId());
-		grid.getStore().getRecord(data).addChange(properties.bankName(), userModel.getBankName());
-		grid.getStore().getRecord(data).addChange(properties.accountNo(), userModel.getAccountNo());
+//		grid.getStore().getRecord(data).addChange(properties.bankName(), userModel.getBankName());
+//		grid.getStore().getRecord(data).addChange(properties.accountNo(), userModel.getAccountNo());
 	}
 
 	@Override

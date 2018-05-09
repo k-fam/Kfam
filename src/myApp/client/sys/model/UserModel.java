@@ -9,64 +9,30 @@ public class UserModel extends AbstractDataModel {
 	private Long userId ;
 	private Long companyId;
 	private String korName; 
-	private String ctzNo; 
-	private String engName; 
-	private String chnName; 
-	private String genderCode; 
-	private String genderName;
-	private String nationCode; 
-	private String nationName;
-	private Date birthday; 
 	private String email; 
-	private String telNo01; 
-	private String telNo02; 
-	private String faxNo; 
+	private String telNo; 
+	private String tel1; 
+	private String tel2; 
+	private String tel3; 
 	private String zipCode; 
 	private String zipAddress; 
 	private String zipDetail; 
-	private String schoolName; 
-	private String graduateYear;
-	private String mainMajor;
-	private String subMajor;
-	private String militaryTypeCode;
-	private String militaryTypeName;
-	private String scholar;
-	
+
 	private String loginYn; 
-	
-	private String career; 
 	private String loginId; 
 	private String passwd; 
+
+	private String refreshTime;
+	private String mrdRole;
+	
 	private String managerYn;
 	private String closeYn;
-	private String note;
 	private String adminYn; 
-	
-	private String bankCode; 
-	private String bankName;
-	private String accountNo; 
-	private String accountHolder; 
 	
 	private Date startDate; 
 	private Date closeDate; 
 	
 	private CompanyModel companyModel = new CompanyModel(); 
-	
-	public String getAccountNo() {
-		return accountNo;
-	}
-
-	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
-	}
-
-	public String getAccountHolder() {
-		return accountHolder;
-	}
-
-	public void setAccountHolder(String accountHolder) {
-		this.accountHolder = accountHolder;
-	}
 	
 	public String getAdminYn() {
 		return adminYn;
@@ -107,78 +73,43 @@ public class UserModel extends AbstractDataModel {
 	public void setKorName(String korName) {
 		this.korName = korName;
 	}
-	public String getCtzNo() {
-		return ctzNo;
-	}
-	public void setCtzNo(String ctzNo) {
-		this.ctzNo = ctzNo;
-	}
-	public String getEngName() {
-		return engName;
-	}
-	public void setEngName(String engName) {
-		this.engName = engName;
-	}
-	public String getChnName() {
-		return chnName;
-	}
-	public void setChnName(String chnName) {
-		this.chnName = chnName;
-	}
-	public String getGenderCode() {
-		return genderCode;
-	}
-	public void setGenderCode(String genderCode) {
-		this.genderCode = genderCode;
-	}
-	public String getGenderName() {
-		return genderName;
-	}
-	public void setGenderName(String genderName) {
-		this.genderName = genderName;
-	}
-	public String getNationCode() {
-		return nationCode;
-	}
-	public void setNationCode(String nationCode) {
-		this.nationCode = nationCode;
-	}
-	public String getNationName() {
-		return nationName;
-	}
-	public void setNationName(String nationName) {
-		this.nationName = nationName;
-	}
-	public Date getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getTelNo01() {
-		return telNo01;
+	public String getTelNo() {
+		return telNo;
 	}
-	public void setTelNo01(String telNo01) {
-		this.telNo01 = telNo01;
+	public void setTelNo(String telNo) {
+		this.telNo = telNo;
 	}
-	public String getTelNo02() {
-		return telNo02;
+	
+	public String getTel1() {
+		return tel1;
 	}
-	public void setTelNo02(String telNo02) {
-		this.telNo02 = telNo02;
+
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
 	}
-	public String getFaxNo() {
-		return faxNo;
+
+	public String getTel2() {
+		return tel2;
 	}
-	public void setFaxNo(String faxNo) {
-		this.faxNo = faxNo;
+
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
 	}
+
+	public String getTel3() {
+		return tel3;
+	}
+
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -197,18 +128,6 @@ public class UserModel extends AbstractDataModel {
 	public void setZipDetail(String zipDetail) {
 		this.zipDetail = zipDetail;
 	}
-	public String getScholar() {
-		return scholar;
-	}
-	public void setScholar(String scholar) {
-		this.scholar = scholar;
-	}
-	public String getCareer() {
-		return career;
-	}
-	public void setCareer(String career) {
-		this.career = career;
-	}
 	public String getLoginId() {
 		return loginId;
 	}
@@ -221,17 +140,28 @@ public class UserModel extends AbstractDataModel {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+
+	public String getRefreshTime() {
+		return refreshTime;
+	}
+
+	public void setRefreshTime(String refreshTime) {
+		this.refreshTime = refreshTime;
+	}
+
+	public String getMrdRole() {
+		return mrdRole;
+	}
+
+	public void setMrdRole(String mrdRole) {
+		this.mrdRole = mrdRole;
+	}
+
 	public String getManagerYn() {
 		return managerYn;
 	}
 	public void setManagerYn(String managerYn) {
 		this.managerYn = managerYn;
-	}
-	public String getNote() {
-		return note;
-	}
-	public void setNote(String note) {
-		this.note = note;
 	}
 
 	public String getCloseYn() {
@@ -250,70 +180,6 @@ public class UserModel extends AbstractDataModel {
 		this.closeYn = closeYnBoolean.toString(); 
 	}
 	
-	public String getSchoolName() {
-		return schoolName;
-	}
-
-	public void setSchoolName(String schoolName) {
-		this.schoolName = schoolName;
-	}
-
-	public String getGraduateYear() {
-		return graduateYear;
-	}
-
-	public void setGraduateYear(String graduateYear) {
-		this.graduateYear = graduateYear;
-	}
-
-	public String getMainMajor() {
-		return mainMajor;
-	}
-
-	public void setMainMajor(String mainMajor) {
-		this.mainMajor = mainMajor;
-	}
-
-	public String getSubMajor() {
-		return subMajor;
-	}
-
-	public void setSubMajor(String subMajor) {
-		this.subMajor = subMajor;
-	}
-
-	public String getMilitaryTypeCode() {
-		return militaryTypeCode;
-	}
-
-	public void setMilitaryTypeCode(String militaryTypeCode) {
-		this.militaryTypeCode = militaryTypeCode;
-	}
-
-	public String getMilitaryTypeName() {
-		return militaryTypeName;
-	}
-
-	public void setMilitaryTypeName(String militaryTypeName) {
-		this.militaryTypeName = militaryTypeName;
-	}
-
-	public String getBankCode() {
-		return bankCode;
-	}
-
-	public void setBankCode(String bankCode) {
-		this.bankCode = bankCode;
-	}
-
-	public String getBankName() {
-		return bankName;
-	}
-
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
-
 	public String getLoginYn() {
 		return loginYn;
 	}

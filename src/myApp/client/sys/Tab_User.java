@@ -86,7 +86,7 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		GridBuilder<UserModel> gridBuilder = new GridBuilder<UserModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-		gridBuilder.addText(properties.ctzNo(), 80, "직원번호", new TextField()) ;		
+//		gridBuilder.addText(properties.ctzNo(), 80, "직원번호", new TextField()) ;		
 		gridBuilder.addText(properties.korName(), 80, "이름 ", new TextField()) ;
 
 		final ComboBoxField genderComboBox = new ComboBoxField("GenderCode");  
@@ -94,17 +94,17 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			@Override
 			public void onCollapse(CollapseEvent event) {
 				UserModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
+//				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
-		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
-		gridBuilder.addText(properties.mainMajor(), 160, "전공과목", new TextField()) ;		
+//		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
+//		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
+//		gridBuilder.addText(properties.mainMajor(), 160, "전공과목", new TextField()) ;		
 		gridBuilder.addDate(properties.startDate(), 100, "근무시작일", new DateField()) ;
 		gridBuilder.addDate(properties.closeDate(), 100, "근무종료일", new DateField()) ;
 		gridBuilder.addText(properties.email(), 150, "이메일주소", new TextField()) ;
-		gridBuilder.addText(properties.telNo01(), 120, "전화번호(1)", new TextField()) ;
-		gridBuilder.addText(properties.telNo02(), 120, "전화번호(2)", new TextField()) ;
+//		gridBuilder.addText(properties.telNo01(), 120, "전화번호(1)", new TextField()) ;
+//		gridBuilder.addText(properties.telNo02(), 120, "전화번호(2)", new TextField()) ;
 		gridBuilder.addText(properties.loginId(), 100, "로그인아이디", new TextField()) ;
 
 		ColumnConfig<UserModel, String> password = gridBuilder.addText(properties.passwd(), 100, "패스워드", new PasswordField());
@@ -117,7 +117,7 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		
 		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
 		gridBuilder.addText(properties.zipAddress(), 250, "주소", new TextField()) ;
-		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
+//		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
 
 		return gridBuilder.getGrid(); 
 	}

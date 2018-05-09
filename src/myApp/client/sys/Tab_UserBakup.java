@@ -90,18 +90,18 @@ public class Tab_UserBakup extends BorderLayoutContainer implements InterfaceGri
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 		gridBuilder.addText(properties.korName(), 80, "한글이름") ;
-		gridBuilder.addText(properties.ctzNo(), 120, "주민번호") ;
-		gridBuilder.addText(properties.genderName(), 60, "성별") ;
-		gridBuilder.addText(properties.nationName(), 80, "국적") ;
-		gridBuilder.addText(properties.engName(), 120, "영문명") ;
+//		gridBuilder.addText(properties.ctzNo(), 120, "주민번호") ;
+//		gridBuilder.addText(properties.genderName(), 60, "성별") ;
+//		gridBuilder.addText(properties.nationName(), 80, "국적") ;
+//		gridBuilder.addText(properties.engName(), 120, "영문명") ;
 		
-		gridBuilder.addDate(properties.birthday(), 100, "생일") ;
-		gridBuilder.addText(properties.telNo01(), 120, "전화번호1") ;
-		gridBuilder.addText(properties.telNo02(), 120, "전화번호2") ;
+//		gridBuilder.addDate(properties.birthday(), 100, "생일") ;
+//		gridBuilder.addText(properties.telNo01(), 120, "전화번호1") ;
+//		gridBuilder.addText(properties.telNo02(), 120, "전화번호2") ;
 		gridBuilder.addText(properties.zipCode(), 80, "우편번호") ;
 		gridBuilder.addText(properties.zipAddress(), 250, "우편번호주소") ;
 		gridBuilder.addText(properties.zipDetail(), 250, "상세주소") ;
-		gridBuilder.addText(properties.note(), 400, "비고");
+//		gridBuilder.addText(properties.note(), 400, "비고");
 
 		return gridBuilder.getGrid(); 
 	}
