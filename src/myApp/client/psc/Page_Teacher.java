@@ -91,7 +91,7 @@ public class Page_Teacher  extends VerticalLayoutContainer implements InterfaceG
 		TeacherModel data = grid.getSelectionModel().getSelectedItem(); 
 		grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
 		grid.getStore().getRecord(data).addChange(properties.userId(), userModel.getUserId());
-		grid.getStore().getRecord(data).addChange(properties.telNo01(), userModel.getTelNo01());
+//		grid.getStore().getRecord(data).addChange(properties.telNo(), userModel.getTelNo());
 	}
 	
 	public Grid<TeacherModel> getGrid(){

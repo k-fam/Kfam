@@ -1,5 +1,21 @@
 /** Add css rules here for your application. */
+.Index_Join_label {
+	font-size: 9pt;
+	color: #746F6F;
+	font-family: 맑은고딕, sans-serif;
+}
 
+.Otp_label {
+	font-size: 9pt;
+	color: red;
+	font-family: 맑은고딕, sans-serif;
+}
+
+.etc_label {
+	font-size: 10pt;
+	color: #000000;
+	font-family: 맑은고딕, sans-serif;
+}
 
 /** Example rules used by the template application (remove for your app) */
 h1 {

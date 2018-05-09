@@ -96,7 +96,7 @@ public class Tab_Admin extends BorderLayoutContainer implements InterfaceGridOpe
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 		gridBuilder.addText(properties.korName(), 80, "한글이름", new TextField()) ;
-		gridBuilder.addText(properties.ctzNo(), 120, "주민번호", new TextField()) ;
+//		gridBuilder.addText(properties.ctzNo(), 120, "주민번호", new TextField()) ;
 		
 		gridBuilder.addText(properties.loginId(), 180, "아이디", new TextField()) ;
 		ColumnConfig<UserModel, String> password = gridBuilder.addText(properties.passwd(), 120, "패스워드", new PasswordField());
@@ -113,29 +113,29 @@ public class Tab_Admin extends BorderLayoutContainer implements InterfaceGridOpe
 			@Override
 			public void onCollapse(CollapseEvent event) {
 				UserModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
+//				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
+//		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
 		
 		final ComboBoxField nationComboBox = new ComboBoxField("NationCode");  
 		genderComboBox.addCollapseHandler(new CollapseHandler(){
 			@Override
 			public void onCollapse(CollapseEvent event) {
 				UserModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.nationCode(), nationComboBox.getCode());
+//				grid.getStore().getRecord(data).addChange(properties.nationCode(), nationComboBox.getCode());
 			}
 		}); 
 
-		gridBuilder.addText(properties.nationName(), 80, "국적", nationComboBox) ;
-		gridBuilder.addText(properties.engName(), 120, "영문명", new TextField()) ;
-		gridBuilder.addDate(properties.birthday(), 100, "생일", new DateField()) ;
-		gridBuilder.addText(properties.telNo01(), 120, "전화번호1", new TextField()) ;
-		gridBuilder.addText(properties.telNo02(), 120, "전화번호2", new TextField()) ;
+//		gridBuilder.addText(properties.nationName(), 80, "국적", nationComboBox) ;
+//		gridBuilder.addText(properties.engName(), 120, "영문명", new TextField()) ;
+//		gridBuilder.addDate(properties.birthday(), 100, "생일", new DateField()) ;
+//		gridBuilder.addText(properties.telNo01(), 120, "전화번호1", new TextField()) ;
+//		gridBuilder.addText(properties.telNo02(), 120, "전화번호2", new TextField()) ;
 		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
 		gridBuilder.addText(properties.zipAddress(), 250, "우편번호주소", new TextField()) ;
 		gridBuilder.addText(properties.zipDetail(), 250, "상세주소", new TextField()) ;
-		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
+//		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
 
 		return gridBuilder.getGrid(); 
 	}

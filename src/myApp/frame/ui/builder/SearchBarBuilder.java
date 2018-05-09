@@ -159,6 +159,20 @@ public class SearchBarBuilder {
 		return button; 
 	}
 
+	public TextButton addInsertButton(String text, int length){
+		TextButton button = new TextButton(text);
+		button.setWidth(length);
+		button.addSelectHandler(new SelectHandler(){
+			@Override
+			public void onSelect(SelectEvent event) {
+				target.insertRow();
+			}
+		}); 
+		searchBar.add(button);
+		
+		return button; 
+	}
+
 	public TextButton addDeleteButton(){
 		TextButton button = new TextButton("삭제");
 		button.setWidth(50);
