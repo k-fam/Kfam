@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.jdbc.RuntimeSqlException;
 import org.apache.ibatis.jdbc.SqlBuilder;
 import org.apache.ibatis.jdbc.SqlRunner;
 import org.apache.ibatis.mapping.ResultMapping;
@@ -71,11 +72,15 @@ public class UpdateDataModel<T extends AbstractDataModel> {
 					runner.update(updateSql);
 				}					
 			} 
-			catch (SQLException e) {
+			catch (RuntimeSqlException e) {
+				System.out.println("update fail : \n" + e.getMessage());
 				result.fail(-1, "update fail : \n" + e.getMessage());
 			    result.setMessage("update fail");
 				e.printStackTrace();
 				return; 
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			T updateModel = sqlSession.selectOne(tableName + ".selectById", dataModel.getKeyId());
@@ -174,7 +179,7 @@ public class UpdateDataModel<T extends AbstractDataModel> {
 				System.out.println(deleteSql);
 				SqlRunner runner = new SqlRunner(sqlSession.getConnection());
 				runner.delete(deleteSql);
-			} catch (SQLException e) {
+			} catch (RuntimeSqlException | SQLException e) {
 				result.fail(-1, "delete fail : \n" + e.getMessage());
 			    result.setMessage("delete fail");
 				e.printStackTrace();

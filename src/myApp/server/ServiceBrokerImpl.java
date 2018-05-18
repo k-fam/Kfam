@@ -30,7 +30,7 @@ public class ServiceBrokerImpl extends RemoteServiceServlet implements Interface
 
 		ServiceResult result = new ServiceResult(); 
 	    result.setServiceName(request.getServiceName());
-	    
+
 		try { // Database session create  
 		    sqlSession = DatabaseFactory.openSession();
 		}
@@ -48,11 +48,11 @@ public class ServiceBrokerImpl extends RemoteServiceServlet implements Interface
 		    }
 		    return result ;
 		}
-		
+
 		try { 
 			// execute service & method 
 			String serviceName = request.getServiceName(); 
-			
+
 			if("getSeq".equals(serviceName)) { // seq 가져오기 
 				IsNewData isNewData = new IsNewData(); 
 				Long seq = isNewData.getSeq(sqlSession); 

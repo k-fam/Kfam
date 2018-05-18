@@ -1,9 +1,9 @@
-package myApp.frame.ui.builder;
+package myApp.client.cst;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import myApp.client.sys.model.CodeModel;
+import myApp.client.cst.model.IcamAccModel;
 import myApp.frame.service.InterfaceServiceCall;
 import myApp.frame.service.ServiceCall;
 import myApp.frame.service.ServiceRequest;
@@ -14,14 +14,12 @@ import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.widget.core.client.form.StringComboBox;
 import com.sencha.gxt.widget.core.client.info.Info;
 
-public class ComboBoxField extends StringComboBox implements InterfaceServiceCall {
+public class MgComboBoxField extends StringComboBox implements InterfaceServiceCall {
 
-	private Map<String, CodeModel> codeList = new HashMap<String, CodeModel>();
+	private Map<String, IcamAccModel> mgCodeList = new HashMap<String, IcamAccModel>();
 	
-	public ComboBoxField(String codeKind){
-		ServiceRequest request = new ServiceRequest("sys.Code.selectByCodeKind");
-		request.add("codeKind", codeKind);
-		
+	public MgComboBoxField(){
+		ServiceRequest request = new ServiceRequest("cst.IcamAcc.selectByMgCombo");
 		ServiceCall service = new ServiceCall();
 		service.execute(request, this);
 		this.setTriggerAction(TriggerAction.ALL);
@@ -32,9 +30,9 @@ public class ComboBoxField extends StringComboBox implements InterfaceServiceCal
 //	}
 	
 	public String getCode(){
-  		CodeModel code = codeList.get(this.getCurrentValue()); 
+		IcamAccModel code = mgCodeList.get(this.getCurrentValue()); 
   		if(code != null){
-  			return code.getCode(); 
+  			return code.getMgCode(); 
   		}
   		else {
   			return null; 
@@ -48,9 +46,9 @@ public class ComboBoxField extends StringComboBox implements InterfaceServiceCal
 			return ; 
 		}
 		for (AbstractDataModel model: result.getResult()) {
-			CodeModel code = (CodeModel)model ;
-			codeList.put(code.getName(), code);
-			this.add(code.getName());
+			IcamAccModel mgCode = (IcamAccModel)model ;
+			mgCodeList.put(mgCode.getMgCodeName(), mgCode);
+			this.add(mgCode.getMgCodeName());
 		}
 	}
 	

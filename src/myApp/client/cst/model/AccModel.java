@@ -5,9 +5,9 @@ import myApp.frame.ui.AbstractDataModel;
 
 public class AccModel extends AbstractDataModel {
 
-	private Long	accID;
-	private Long	userID;
-	private	String	mgCd;
+	private Long	accId;
+	private Long	userId;
+	private	String	mgCode;
 	private String	accNo;
 	private	String	fundCode;
 	private String	accName;
@@ -15,40 +15,40 @@ public class AccModel extends AbstractDataModel {
 	private String	branchManager;
 	private String	managerContact;
 	
-	private String	mgName;
+	private String	mgCodeName;
 	
 	@Override
 	public void setKeyId(Long id) {
-		this.setAccID(id);
+		this.setAccId(id);
 	}
 
 	@Override
 	public Long getKeyId() {
-		return getAccID();
+		return getAccId();
 	}
 
-	public Long getAccID() {
-		return accID;
+	public Long getAccId() {
+		return accId;
 	}
 
-	public void setAccID(Long accID) {
-		this.accID = accID;
+	public void setAccId(Long accId) {
+		this.accId = accId;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public String getMgCd() {
-		return mgCd;
+	public String getMgCode() {
+		return mgCode;
 	}
 
-	public void setMgCd(String mgCd) {
-		this.mgCd = mgCd;
+	public void setMgcode(String mgCode) {
+		this.mgCode = mgCode;
 	}
 
 	public String getAccNo() {
@@ -99,12 +99,12 @@ public class AccModel extends AbstractDataModel {
 		this.managerContact = managerContact;
 	}
 
-	public String getMgName() {
-		return mgName;
+	public String getMgCodeName() {
+		return mgCodeName;
 	}
 
-	public void setMgName(String mgName) {
-		this.mgName = mgName;
+	public void setMgCodeName(String mgCodeName) {
+		this.mgCodeName = mgCodeName;
 	}
 
 }

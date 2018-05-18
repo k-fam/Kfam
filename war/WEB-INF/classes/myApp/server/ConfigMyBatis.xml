@@ -118,6 +118,9 @@
 	<mapper resource="myApp/service/tmc/mapper/tmc03_checkup.xml"/>
 	<mapper resource="myApp/service/tmc/mapper/tmc99_retrieve.xml"/>
 
+	<mapper resource="myApp/service/cst/mapper/cst02_acc.xml"/>
+ 	<mapper resource="myApp/service/cst/mapper/cst03_icam_acc.xml"/>
+
 </mappers>
 
 </configuration>

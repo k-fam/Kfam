@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cst02_acc">
+
+	<resultMap type="myApp.client.cst.model.AccModel" id="mapper">
+		<id     column="cst02_acc_id"           property="accId"/>
+		<result column="cst02_user_id"          property="userId"/>
+		<result column="cst02_mg_cd"            property="mgCode"/>
+		<result column="cst02_acc_no"           property="accNo"/>
+		<result column="cst02_fund_code"        property="fundCode"/>
+		<result column="cst02_acc_name"         property="accName"/>
+		<result column="cst02_acc_branch"       property="accBranch"/>
+		<result column="cst02_branch_manager"   property="branchManager"/>
+		<result column="cst02_manager_contact"  property="managerContact"/>
+	</resultMap>
+
+	<select id="selectById" resultMap="mapper" parameterType="Long">
+		select *
+		  from cst02_acc
+		 where cst02_acc_id = #{accId}
+	</select>
+
+	<select id="selectByUserId" resultMap="mapper" parameterType="Long">
+		select *
+		  from cst02_acc
+		 where cst02_user_id = #{userId}
+	</select>
+
+</mapper>

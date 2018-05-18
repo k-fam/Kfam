@@ -16,7 +16,7 @@
 	<result column="sys02_passwd"		property="passwd"/>
 	<result column="sys02_login_yn"		property="loginYn"/>
 	<result column="sys02_refresh_time"	property="refreshTime"/>
-	<result column="sys02_mrd_role"		property="mrdRole"/>
+	<result column="sys02_role_id"		property="roleId"/>
 	<result column="sys02_admin_yn"		property="adminYn"/>
 	
 	<result column="sys02_start_date"	property="startDate"/>
@@ -26,10 +26,8 @@
 		javaType="myApp.client.sys.model.CompanyModel" 
 		resultMap="sys01_company.mapper"
 	/>
-	
-	
 </resultMap>
-	
+
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	sys02_user.*, 
 			sys01_company.*, 
@@ -39,13 +37,21 @@
 </select>
 
 <select id="selectByLoginInfo" resultMap="mapper" parameterType="HashMap">
-	select 	sys02_user.*,
-			sys01_company.*,
-			case when sys02_company_id = 2000001 then 'true' else 'false' end sys02_admin_yn   
-	from 	sys02_user, sys01_company 
-	where 	sys02_login_id 	= #{loginId}
-	and		sys02_passwd 	= #{passwd}
-	and		sys02_company_id = sys01_company_id
+<!-- 	select 	sys02_user.*, -->
+<!-- 			sys01_company.*, -->
+<!-- 			case when sys02_company_id = 2000001 then 'true' else 'false' end sys02_admin_yn    -->
+<!-- 	from 	sys02_user, sys01_company  -->
+<!-- 	where 	sys02_login_id 	= #{loginId} -->
+<!-- 	and		sys02_passwd 	= #{passwd} -->
+<!-- 	and		sys02_company_id = sys01_company_id -->
+	select *
+	  from sys02_user
+	 where ( ( sys02_login_yn = 'true'		and
+	   		   sys02_login_id = #{loginId}	and
+	   		   sys02_passwd   = #{passwd}   ) or
+	   		 ( sys02_login_yn = 'false'		and
+	   		   sys02_email    = #{loginId}	and
+	   		   'OTP인증번호'    = #{passwd}   ) )
 </select>
 
 <select id="selectAdminUserByUserName" resultMap="mapper" parameterType="String">
@@ -84,5 +90,47 @@
 	order by sys02_kor_nm
 </select>
 
+<insert id="insert"  parameterType="myApp.client.sys.model.UserModel">
+	insert
+	  into sys02_user
+	    ( sys02_user_id
+		, sys02_company_id
+		, sys02_kor_nm
+		, sys02_email
+		, sys02_tel
+		, sys02_zip_cd
+		, sys02_zip_addr
+		, sys02_zip_detail
+		, sys02_login_id
+		, sys02_passwd
+		, sys02_login_yn
+		, sys02_refresh_time
+		, sys02_start_date
+		, sys02_end_date
+		, sys02_role_id
+	  ) values (
+	      #{userId}
+		, #{companyId}
+		, #{korName}
+		, #{email}
+		, #{telNo}
+		, #{zipCode}
+		, #{zipAddress}
+		, #{zipDetail}
+		, #{email}
+		, #{passwd}
+		, #{loginYn}
+		, #{refreshTime}
+		, #{startDate}
+		, #{endDate}
+		, #{roleId}
+	  );
+</insert>
+
+<select id="checkEmail" resultType="Long" parameterType="HashMap" > 
+	select 	count(*)
+	from 	sys02_user  
+	where	sys02_email = #{email}
+</select>
 
 </mapper>

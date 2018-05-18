@@ -1,63 +1,83 @@
 package myApp.client.cst;
 
-import com.google.gwt.cell.client.ActionCell;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.user.client.ui.Label;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.event.CollapseEvent;
-import com.sencha.gxt.widget.core.client.event.CollapseEvent.CollapseHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.FormPanel;
 import com.sencha.gxt.widget.core.client.form.TextField;
-import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 import myApp.client.cst.model.AccModel;
-import myApp.client.cst.model.AccModelProperties;
 import myApp.client.sys.model.UserModel;
-import myApp.client.sys.model.UserModelProperties;
-import myApp.frame.service.GridInsertRow;
+import myApp.frame.service.InterfaceServiceCall;
+import myApp.frame.service.ServiceCall;
+import myApp.frame.service.ServiceRequest;
+import myApp.frame.service.ServiceResult;
+import myApp.frame.ui.AbstractDataModel;
 import myApp.frame.ui.InterfaceLookupResult;
 import myApp.frame.ui.SimpleMessage;
 import myApp.frame.ui.builder.AbstractLookupWindow;
-import myApp.frame.ui.builder.ComboBoxField;
-import myApp.frame.ui.builder.GridBuilder;
 import myApp.frame.ui.builder.InterfaceGridOperate;
-import myApp.frame.ui.builder.SearchBarBuilder;
 
-public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<UserModel>, InterfaceGridOperate {
+public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<UserModel>, InterfaceGridOperate, InterfaceServiceCall {
 
 	interface EditDriver extends SimpleBeanEditorDriver<UserModel, Lookup_JoinUser> {}
 	EditDriver editDriver = GWT.create(EditDriver.class);
-	Grid<UserModel> UserGird;
 	UserModel userModel;
 
-	private AccModelProperties properties = GWT.create(AccModelProperties.class);
-	private Grid<AccModel> accGrid = this.buildGrid();
+	private String actionName = ""; 
+	private Long userId; 
 	private InterfaceLookupResult lookupParent;
+	private Lookup_JoinUserAccount grid = new Lookup_JoinUserAccount();  
 
-	TextField 		email 		= new TextField();
-	TextField 		korName 	= new TextField();
-	TextField    	tel1		= new TextField();
-	TextField		tel2		= new TextField();
-	TextField		tel3		= new TextField();
-	TextField		zipCode		= new TextField();
-	TextField		zipAddress	= new TextField();
-	TextField		zipDetail	= new TextField();
-
-	public Lookup_JoinUser(InterfaceLookupResult lookupParent) {
+	TextField email 		= new TextField();
+	TextField korName 		= new TextField();
+	TextField telNo			= new TextField();
+	TextField tel1			= new TextField();
+	TextField tel2			= new TextField();
+	TextField tel3			= new TextField();
+	TextField zipCode		= new TextField();
+	TextField zipAddress	= new TextField();
+	TextField zipDetail		= new TextField();
+	
+	public Lookup_JoinUser(InterfaceLookupResult lookupParent, String actionName) {
+		
 		this.lookupParent = lookupParent;
-		this.setInit(":: 회원가입 ::", 700, 500);
+		this.actionName = actionName;
 
-		VerticalLayoutContainer vlc = new VerticalLayoutContainer();
+		if("addUser".equals(actionName)) {
+			this.setInit(":: 회원가입 ::", 700, 500);
+			ServiceRequest request = new ServiceRequest("getSeq");
+			ServiceCall service = new ServiceCall();
+			service.execute(request, this);
+		}
+		else {
+			this.setInit(":: 회원정보수정::", 700, 500);
+		}
+
+		this.editDriver.initialize(this);
+
+		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
+		vlc.add(this.getForm(), new VerticalLayoutData(-1, 205, new Margins(0, 0, 0, 0)));
+		vlc.add(this.grid, new VerticalLayoutData(1, 1, new Margins(0, 0, 0, 0)));
+		vlc.setBorders(true);
+		this.add(vlc); 
+	}
+	
+	private FormPanel getForm() {
+		
+		VerticalLayoutContainer formLayout = new VerticalLayoutContainer();
 
 		//--------------------------------
 		//	ID(E-Mail) ADD
@@ -76,14 +96,14 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		emailCheckButton.addSelectHandler(new SelectHandler() {
 			@Override
 			public void onSelect(SelectEvent event) {
-				//getService(); // 함수로 빼서 호출한다. 
+				checkEmail(); 
 			}
 		});
 
 		HBoxLayoutContainer emailBoxLayout = new HBoxLayoutContainer(); 
 		emailBoxLayout.add(emailFieldLabel , new BoxLayoutData(new Margins(0, 5, 0, 0))); 
 		emailBoxLayout.add(emailCheckButton, new BoxLayoutData(new Margins(0, 0, 0, 0)));
-		vlc.add(emailBoxLayout, new VerticalLayoutData(-1, -1, new Margins(15, 0, 0, 10)));
+		formLayout.add(emailBoxLayout, new VerticalLayoutData(-1, -1, new Margins(15, 0, 0, 10)));
 
 		//--------------------------------
 		//	이름 ADD
@@ -91,7 +111,7 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		FieldLabel korNameFieldLabel = new FieldLabel(korName, "▶ 이름 ");
 		korNameFieldLabel.setLabelWidth(100);
 		korNameFieldLabel.setLabelSeparator(" ");
-		vlc.add(korNameFieldLabel, new VerticalLayoutData(300, -1, new Margins(5, 0, 0, 10)));
+		formLayout.add(korNameFieldLabel, new VerticalLayoutData(300, -1, new Margins(5, 0, 0, 10)));
 
 		//--------------------------------
 		//	휴대폰번호 ADD
@@ -100,7 +120,6 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		tel1FieldLabel.setWidth(160);
 		tel1FieldLabel.setLabelWidth(100);
 		tel1FieldLabel.setLabelSeparator(" ");
-		tel1.setText("010");
 
 		FieldLabel tel2FieldLabel = new FieldLabel(tel2, "-");
 		tel2FieldLabel.setWidth(60);
@@ -116,7 +135,7 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		telBoxLayout.add(tel1FieldLabel , new BoxLayoutData(new Margins(0, 0, 0, 0))); 
 		telBoxLayout.add(tel2FieldLabel , new BoxLayoutData(new Margins(0, 0, 0, 5))); 
 		telBoxLayout.add(tel3FieldLabel , new BoxLayoutData(new Margins(0, 0, 0, 5))); 
-		vlc.add(telBoxLayout, new VerticalLayoutData(-1, -1, new Margins(5, 0, 0, 10)));
+		formLayout.add(telBoxLayout, new VerticalLayoutData(-1, -1, new Margins(5, 0, 0, 10)));
 
 		//--------------------------------
 		//	우편번호 & 우편번호버튼 ADD
@@ -139,7 +158,7 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		HBoxLayoutContainer zipCodeBoxLayout = new HBoxLayoutContainer(); 
 		zipCodeBoxLayout.add(zipCodeFieldLabel , new BoxLayoutData(new Margins(0, 5, 0, 0))); 
 		zipCodeBoxLayout.add(zipCodeButton     , new BoxLayoutData(new Margins(0, 0, 0, 0)));
-		vlc.add(zipCodeBoxLayout, new VerticalLayoutData(-1, -1, new Margins(5, 0, 0, 10)));
+		formLayout.add(zipCodeBoxLayout, new VerticalLayoutData(-1, -1, new Margins(5, 0, 0, 10)));
 
 		//--------------------------------
 		//	주소 ADD
@@ -154,65 +173,78 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 		zipDetailFieldLabel.setLabelWidth(100);
 		zipDetailFieldLabel.setLabelSeparator(" ");
 
-		vlc.add(zipAddressFieldLabel, new VerticalLayoutData(-1, -1, new Margins(0, 0, 0, 10)));
-		vlc.add(zipDetailFieldLabel , new VerticalLayoutData(-1, -1, new Margins(0, 0, 0, 10)));
+		formLayout.add(zipAddressFieldLabel, new VerticalLayoutData(-1, -1, new Margins(0, 0, 0, 10)));
+		formLayout.add(zipDetailFieldLabel , new VerticalLayoutData(-1, -1, new Margins(0, 0, 0, 10)));
 
-		//--------------------------------
-		//	계좌정보Grid ADD
-		//--------------------------------
-		Label accLabel = new Label();
-		accLabel.setText("▶ 계좌정보");
-		accLabel.setStyleName("etc_label");
+		FormPanel form = new FormPanel(); 
+	    form.setWidget(formLayout);
+//    	form.setBorders(true);
+//	    form.setLabelWidth(80); // 모든 field 적용 후 설정한다.
 
-		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addInsertButton("계좌추가", 80);
-
-		HBoxLayoutContainer accAddBoxLayout = new HBoxLayoutContainer(); 
-		accAddBoxLayout.add(accLabel                        , new BoxLayoutData(new Margins(12, 0, 0, 0))); 
-		accAddBoxLayout.add(searchBarBuilder.getSearchBar() , new BoxLayoutData(new Margins(0, 0, 0, 15)));
-		vlc.add(accAddBoxLayout, new VerticalLayoutData(-1, -1, new Margins(0, 0, 0, 10)));
-		vlc.add(accGrid  , new VerticalLayoutData(1,1, new Margins(0, 0, 0, 0)));
-
-		vlc.setBorders(true);
-		this.add(vlc);
+	    return form ; 
 	}
-	
-	private Grid<AccModel> buildGrid() {
 
-		GridBuilder<AccModel> gridBuilder = new GridBuilder<AccModel>(properties.keyId());
+	protected void checkEmail() {
 
-		final ComboBoxField mgNameComboBox = new ComboBoxField("mgName");
-		mgNameComboBox.addCollapseHandler(new CollapseHandler() {
-			@Override
-			public void onCollapse(CollapseEvent event) {
-				AccModel data = accGrid.getSelectionModel().getSelectedItem();
-				accGrid.getStore().getRecord(data).addChange(properties.mgName(), mgNameComboBox.getCode());
-			}
-		});
+		this.actionName = "checkEmail";
+		this.userModel  = this.editDriver.flush();
 		
-		gridBuilder.addText(properties.mgName()	, 120, "증권사"	, mgNameComboBox);
-		gridBuilder.addText(properties.accNo() 	, 150, "계좌번호"	, new TextField());
+		if (this.userModel.getEmail().length() == 0) {
+			new SimpleMessage("입력확인","ID(E-Mail) 을(를) 입력하여 주십시오.");
+			return;
+		}
 
-		ActionCell<String> accCheckCell = new ActionCell<String>("계좌확인", new ActionCell.Delegate<String>() {
-			@Override
-			public void execute(String arg0) {
-//				accCheck();
-			}
-		});
-		gridBuilder.addCell(properties.actionCell() , 80, "계좌확인"		, accCheckCell);
+		ServiceRequest request = new ServiceRequest("cst.IcamAcc.checkEmail");
+		request.add("email", this.userModel.getEmail());
+		
+		ServiceCall service = new ServiceCall();
+		service.execute(request, this);
+	}
 
-		gridBuilder.addText(properties.accName()	, 100, "계좌명(별칭)"	, new TextField());
-		gridBuilder.addText(properties.accBranch()	, 100, "지점명"		, new TextField());
+	@Override
+	public void confirm() {
 
-		ActionCell<String> delCell = new ActionCell<String>("삭제", new ActionCell.Delegate<String>() {
-			@Override
-			public void execute(String arg0) {
-//				accDelete();
-			}
-		});
-		gridBuilder.addCell(properties.actionCell() , 70, "계좌삭제", delCell);
+		this.actionName = "updateUser";
+		this.userModel  = this.editDriver.flush(); 
 
-		return gridBuilder.getGrid();
+		if (this.userModel.getEmail().length() == 0) {
+			new SimpleMessage("입력확인","E-Mail 을(를) 입력하여 주십시오.");
+			return;
+		}
+		if (this.userModel.getKorName().length() == 0) {
+			new SimpleMessage("입력확인","이름 을(를) 입력하여 주십시오.");
+			return;
+		}
+		if (this.userModel.getTel1().length() == 0) {
+			new SimpleMessage("입력확인","핸드폰번호를 정확하게 입력하여 주십시오.");
+			return;
+		}
+		if (this.userModel.getTel2().length() == 0) {
+			new SimpleMessage("입력확인","핸드폰번호를 정확하게 입력하여 주십시오.");
+			return;
+		}
+		if (this.userModel.getTel3().length() == 0) {
+			new SimpleMessage("입력확인","핸드폰번호를 정확하게 입력하여 주십시오.");
+			return;
+		}
+		if (grid.checkPreUpdate() == 1) {
+
+			this.userModel.setTelNo(this.userModel.getTel1()+this.userModel.getTel2()+this.userModel.getTel3());
+
+			ServiceRequest request = new ServiceRequest("sys.User.insert");
+
+			request.add("userModel", this.userModel);
+			
+			List<AbstractDataModel> list = new ArrayList<AbstractDataModel>() ;
+			for(AccModel accModel : grid.getGrid().getStore().getAll()) {
+				list.add((AbstractDataModel)accModel); 
+			};
+			
+			request.setList(list);
+			
+			ServiceCall service = new ServiceCall();
+			service.execute(request, this);
+		}
 	}
 
 	@Override
@@ -221,13 +253,43 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 	}
 
 	@Override
-	public void confirm() {
-		UserModel userModel = UserGird.getSelectionModel().getSelectedItem();
-		if(userModel != null) {
-			lookupParent.setLookupResult(userModel);
-			this.hide();
-		} else {
-			new SimpleMessage("입력된 회원정보가 없습니다.");
+	public void getServiceResult(ServiceResult result) {
+		
+		if (result.getStatus() > -1) {	
+			
+			if(this.actionName.equals("addUser")) {
+				
+				this.userModel = new UserModel();
+				
+				// user id를 가져온다. 
+				this.userId = result.getSeq() ; 
+				this.userModel.setUserId(this.userId);
+				
+				this.userModel.setCompanyId(Long.parseLong("1701"));
+				this.userModel.setLoginYn("false");
+				this.userModel.setRefreshTime("60");
+				this.userModel.setRoleId(Long.parseLong("2005540"));
+
+				this.userModel.setEmail("");
+				this.userModel.setKorName("");
+				this.userModel.setTel1("010");
+				this.userModel.setTel2("");
+				this.userModel.setTel3("");
+				
+				this.editDriver.edit(userModel);
+				grid.setUserId(this.userId);
+			}
+			else if (this.actionName.equals("updateUser")) {
+				new SimpleMessage("확인", result.getMessage());
+				lookupParent.setLookupResult(userModel);
+				this.hide();
+			}
+			else if (this.actionName.equals("checkEmail")) {
+				new SimpleMessage("확인", result.getMessage());
+			}
+		}
+		else {
+			new SimpleMessage("오류", result.getMessage()); 
 		}
 	}
 	
@@ -235,23 +297,16 @@ public class Lookup_JoinUser extends AbstractLookupWindow implements Editor<User
 	public void retrieve() {
 		// TODO Auto-generated method stub
 	}
-
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
-
-	@Override
-	public void insertRow() {
-		GridInsertRow<AccModel> service = new GridInsertRow<AccModel>();
-		service.insertRow(accGrid, new AccModel());
-	}
-
 	@Override
 	public void deleteRow() {
 		// TODO Auto-generated method stub
-		
+	}
+	@Override
+	public void insertRow() {
+		// TODO Auto-generated method stub
 	}
 
 }

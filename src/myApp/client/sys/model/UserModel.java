@@ -23,14 +23,14 @@ public class UserModel extends AbstractDataModel {
 	private String passwd; 
 
 	private String refreshTime;
-	private String mrdRole;
+	private Long   roleId;
 	
 	private String managerYn;
 	private String closeYn;
 	private String adminYn; 
 	
 	private Date startDate; 
-	private Date closeDate; 
+	private Date endDate; 
 	
 	private CompanyModel companyModel = new CompanyModel(); 
 	
@@ -84,9 +84,12 @@ public class UserModel extends AbstractDataModel {
 	}
 	public void setTelNo(String telNo) {
 		this.telNo = telNo;
+//		this.telNo = getTel1() + getTel2() + getTel3();
 	}
 	
 	public String getTel1() {
+//		String telNo = getTelNo();
+//		return telNo.substring(0,2);
 		return tel1;
 	}
 
@@ -95,6 +98,8 @@ public class UserModel extends AbstractDataModel {
 	}
 
 	public String getTel2() {
+//		String telNo = getTelNo();
+//		return telNo.substring(3,telNo.length()-4);
 		return tel2;
 	}
 
@@ -103,6 +108,8 @@ public class UserModel extends AbstractDataModel {
 	}
 
 	public String getTel3() {
+//		String telNo = getTelNo();
+//		return telNo.substring(telNo.length()-4, telNo.length());
 		return tel3;
 	}
 
@@ -149,12 +156,12 @@ public class UserModel extends AbstractDataModel {
 		this.refreshTime = refreshTime;
 	}
 
-	public String getMrdRole() {
-		return mrdRole;
+	public Long getRoleId() {
+		return roleId;
 	}
 
-	public void setMrdRole(String mrdRole) {
-		this.mrdRole = mrdRole;
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getManagerYn() {
@@ -196,12 +203,12 @@ public class UserModel extends AbstractDataModel {
 		this.startDate = startDate;
 	}
 
-	public Date getCloseDate() {
-		return closeDate;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setCloseDate(Date closeDate) {
-		this.closeDate = closeDate;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public CompanyModel getCompanyModel() {

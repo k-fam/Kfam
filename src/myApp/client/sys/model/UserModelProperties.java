@@ -27,10 +27,10 @@ public interface UserModelProperties  extends PropertyAccess<UserModel> {
 	ValueProvider<UserModel, String> 	managerYn();
 	
 	ValueProvider<UserModel, Date> 		startDate();
-	ValueProvider<UserModel, Date> 		closeDate();
+	ValueProvider<UserModel, Date> 		endDate();
 	
 	ValueProvider<UserModel, String>	refreshTime();
-	ValueProvider<UserModel, String>	mrdRole();
+	ValueProvider<UserModel, Long>		roleId();
 	
 	// ValueProvider<UserModel, Boolean> 	managerYnBoolean();
 }

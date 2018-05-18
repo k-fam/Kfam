@@ -28,15 +28,15 @@
 			sys06_note, 
 			sys06_menu_id sys07_role_menu_id, 
 			#{userId} sys07_role_id, 
-			sys07_use_yn
+			'true' sys07_use_yn
 	from 	sys07_role_menu,
-				sys06_menu
+			sys06_menu
 	where 	sys06_menu_id = sys07_menu_id
 	and		sys06_parent_id = #{parentId}
 	and		sys07_role_id in (
-		select sys05_role_id
-		from sys05_user_role
-		where sys05_user_id = #{userId})
+		select sys02_role_id
+		from sys02_user
+		where sys02_user_id = #{userId})
 	and	sys07_use_yn = 'true'
 	order by sys06_seq
 </select>

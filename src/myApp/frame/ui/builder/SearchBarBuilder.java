@@ -146,17 +146,7 @@ public class SearchBarBuilder {
 	}
 	
 	public TextButton addInsertButton(){
-		TextButton button = new TextButton("입력");
-		button.setWidth(50);
-		button.addSelectHandler(new SelectHandler(){
-			@Override
-			public void onSelect(SelectEvent event) {
-				target.insertRow();
-			}
-		}); 
-		searchBar.add(button);
-		
-		return button; 
+		return  this.addInsertButton("입력", 50); 
 	}
 
 	public TextButton addInsertButton(String text, int length){

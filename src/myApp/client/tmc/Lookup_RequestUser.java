@@ -55,7 +55,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 //		gridBuilder.addText(properties.mainMajor(), 200, "전공과목") ;
 //		gridBuilder.addText(properties.genderName(), 60, "성별") ;
 		gridBuilder.addDate(properties.startDate(), 120, "근무시작일") ;
-		gridBuilder.addDate(properties.closeDate(), 120, "근무종료일") ;
+		gridBuilder.addDate(properties.endDate(), 120, "근무종료일") ;
 //		gridBuilder.addText(properties.note(), 200, "비고" );
 
 		return gridBuilder.getGrid(); 

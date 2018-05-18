@@ -101,7 +101,7 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 //		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
 //		gridBuilder.addText(properties.mainMajor(), 160, "전공과목", new TextField()) ;		
 		gridBuilder.addDate(properties.startDate(), 100, "근무시작일", new DateField()) ;
-		gridBuilder.addDate(properties.closeDate(), 100, "근무종료일", new DateField()) ;
+		gridBuilder.addDate(properties.endDate(), 100, "근무종료일", new DateField()) ;
 		gridBuilder.addText(properties.email(), 150, "이메일주소", new TextField()) ;
 //		gridBuilder.addText(properties.telNo01(), 120, "전화번호(1)", new TextField()) ;
 //		gridBuilder.addText(properties.telNo02(), 120, "전화번호(2)", new TextField()) ;

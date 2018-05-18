@@ -42,12 +42,11 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
     private CenterLayoutContainer container = new CenterLayoutContainer();
     Viewport viewport = new Viewport();
     
-    private Lookup_JoinUser lookupWindow = new Lookup_JoinUser(getThis());
 	private Main_Login getThis(){
 		return this;
 	}
 
-	public void open() {
+	public void open() { 
 
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer();
 
@@ -63,7 +62,8 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
 		FieldLabel loginFieldLabel = new FieldLabel(firstName, "ID (E-Mail) ");
 		loginFieldLabel.setLabelWidth(85);
 		loginFieldLabel.setLabelSeparator(" ");
-		firstName.setText("alignfactory@gmail.com");
+//		firstName.setText("yiChun@k-fs.co.kr");
+		firstName.setText("admin");
 		vlc.add(loginFieldLabel, new VerticalLayoutData(315, -1, new Margins(0, 0, 5, 15)));
 
 		//----------------------------------------
@@ -73,7 +73,7 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
 		passwdFieldLabel.setLabelWidth(85);
 		//passwdFieldLabel.setWidth(264);
 		passwdFieldLabel.setLabelSeparator(" ");
-		password.setText("1234");
+		password.setText("1111");
 		vlc.add(passwdFieldLabel, new VerticalLayoutData(315, -1, new Margins(0, 0, 5, 15)));
 
 		//----------------------------------------
@@ -102,6 +102,8 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
 		memberJoin.addClickHandler(new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
+				Lookup_JoinUser lookupWindow = new Lookup_JoinUser(getThis(), "addUser");
+//				lookupWindow.addUser(); 
 				lookupWindow.show();
 			}
 		});
@@ -112,30 +114,30 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
 			}
 		});
 
-		Label gb = new Label("|");
-		gb.setStyleName("Index_Join_label");
+//		Label gb = new Label("|");
+//		gb.setStyleName("Index_Join_label");
 
-		Label memberModi = new Label("회원정보수정");
-		memberModi.setStyleName("Index_Join_label");
-		memberModi.addClickHandler(new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				Info.display("onClink","회원정보수정 POPUP");
-			}
-		});
-
-		memberModi.addMouseOverHandler(new MouseOverHandler() {
-			@Override
-			public void onMouseOver(MouseOverEvent event) {
-				Info.display("MouseOver","회원정보수정 MouseOver");
-			}
-		});
+//		Label memberModi = new Label("회원정보수정");
+//		memberModi.setStyleName("Index_Join_label");
+//		memberModi.addClickHandler(new ClickHandler(){
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				Info.display("onClink","회원정보수정 POPUP");
+//			}
+//		});
+//
+//		memberModi.addMouseOverHandler(new MouseOverHandler() {
+//			@Override
+//			public void onMouseOver(MouseOverEvent event) {
+//				Info.display("MouseOver","회원정보수정 MouseOver");
+//			}
+//		});
 
 		HBoxLayoutContainer hBoxLayout = new HBoxLayoutContainer(); 
 		hBoxLayout.add(timeAddCheckBox, new BoxLayoutData(new Margins(0, 0, 0, 15))); 
-		hBoxLayout.add(memberJoin, new BoxLayoutData(new Margins(4, 0, 0, 55))); 
-		hBoxLayout.add(gb        , new BoxLayoutData(new Margins(3, 3, 0, 3))); 
-		hBoxLayout.add(memberModi, new BoxLayoutData(new Margins(4, 0, 0, 0))); 
+		hBoxLayout.add(memberJoin, new BoxLayoutData(new Margins(4, 0, 0, 135))); 
+//		hBoxLayout.add(gb        , new BoxLayoutData(new Margins(3, 3, 0, 3))); 
+//		hBoxLayout.add(memberModi, new BoxLayoutData(new Margins(4, 0, 0, 0))); 
 		vlc.add(hBoxLayout, new VerticalLayoutData(350, -1, new Margins(0, 0, 0, 0)));
 
 		//----------------------------------------
@@ -200,7 +202,6 @@ public class Main_Login implements InterfaceServiceCall, InterfaceLookupResult {
 	@Override
 	public void getServiceResult(ServiceResult result) {
 		if(result.getStatus() > 0){
-			
 			UserModel user = (UserModel) result.getResult(0); 
 			LoginUser.setLoginUser(user); 
 			openFrame(); 

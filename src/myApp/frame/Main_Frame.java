@@ -58,8 +58,7 @@ public class Main_Frame extends BorderLayoutContainer {
 	}
 	
 	private ContentPanel getNorthLayout(){
-		String headerMessage = "반갑습니다. " + LoginUser.getLoginUser().getCompanyModel().getCompanyName()
-				+ " " + LoginUser.getLoginUser().getKorName()+ "님!" ; ; 
+		String headerMessage = "부~~~자 되세요. " + LoginUser.getLoginUser().getKorName()+ "님!" ; 
 
 		Label label = new Label(headerMessage); 
 		label.getElement().getStyle().setProperty("color", "#666666"); // font color 변경
@@ -74,7 +73,7 @@ public class Main_Frame extends BorderLayoutContainer {
 		BoxLayoutData boxLayoutData = new BoxLayoutData(new Margins(0, 0, 0, 0)); 
 		boxLayoutData.setFlex(1);
 		
-		header.add(image, new BoxLayoutData(new Margins(19, 3, 0, 20)));
+		header.add(image, new BoxLayoutData(new Margins(13, 3, 0, 20)));
 		header.add(new Label(), boxLayoutData);
 		header.add(label, new BoxLayoutData(new Margins(19, 5, 0, 20))); 
 		
@@ -96,7 +95,7 @@ public class Main_Frame extends BorderLayoutContainer {
 		
 		AccordionLayoutAppearance accordianLayout = GWT.create(AccordionLayoutAppearance.class); 
 		ContentPanel treeAccordianPanel = new ContentPanel(accordianLayout); 
-		treeAccordianPanel.setHeading("Menu Navigation");	
+//		treeAccordianPanel.setHeading("MENU");	
 		treeAccordianPanel.add(this.treeMenu.getMenuTree()); // tree menu setting 
 
 //		ContentPanel newsAccordianPanel = new ContentPanel(accordianLayout); 
